@@ -1,0 +1,23 @@
+<h1>Tasker</h1>
+
+<table>
+    <tr>
+        <td>Title</td>
+        <td>Start date</td>
+        <td>Start time</td>
+        <td>End date</td>
+        <td>End time</td>
+        <td>Description</td>
+    <tr>
+
+    <% @task.each do |task| %>
+        <tr>
+            <td><%= task.title %></td>
+            <td><%= task.start_date %></td>
+            <td><%= task.start_time %></td>
+            <td><%= task.end_date %></td>
+            <td><%= task.end_time %></td>
+            <td><%= task.description %></td>
+        </tr>
+    <% end %>
+</table>
