@@ -10,14 +10,43 @@
         <td>Description</td>
     <tr>
 
-    <% @task.each do |task| %>
+    <% @tasks.each do |task| %>
         <tr>
+            <td><%= task.id %></td>
             <td><%= task.title %></td>
             <td><%= task.start_date %></td>
-            <td><%= task.start_time %></td>
+            <td><%= task.start_time.to_s[11,8] %></td>
             <td><%= task.end_date %></td>
-            <td><%= task.end_time %></td>
-            <td><%= task.description %></td>
+            <td><%= task.end_time.to_s[11,8] %></td>
+            <td><%= task.description.truncate(15) %></td>
+            <td><%= link_to 'View/edit', edit_task_path(task) %></td>
+            <td><%= link_to 'Delete', task, method: :delete %></td>
         </tr>
     <% end %>
+
+    <tr>
+        <%= form_with scope: :task, url: root_path, local: true do |form| %>
+            <td>
+                <%= form.text_field :title %>
+            </td>
+            <td>
+                <%= form.date_field :start_date %>
+            </td>
+            <td>
+                <%= form.time_field :start_time %>
+            </td>
+            <td>
+                <%= form.date_field :end_date %>
+            </td>
+            <td>
+                <%= form.time_field :end_time %>
+            </td>
+            <td>
+                <%= form.text_area :description %>
+            </td>
+            <td>
+                <%= form.submit %>
+            </td>
+        <% end %>
+    </tr>
 </table>
