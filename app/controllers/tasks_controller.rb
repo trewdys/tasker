@@ -1,9 +1,12 @@
 class TasksController < ApplicationController
     def index
-        if defined?(cookies[:user_session]) === nil
+        if cookies[:user_session] === nil
+            #Force session to generate
+            session[:foo] = 'bar'
             cookies.permanent[:user_session] = session.id
         end
         @tasks = Task.where("user_session = ?", cookies[:user_session])
+        
     end
     
     def show
@@ -26,8 +29,8 @@ class TasksController < ApplicationController
     def update
         @task = Task.find(params[:id])
 
-        if @task.update
-            redirect_to 'edit'
+        if @task.update(task_params)
+            redirect_to root_path
         else
             render 'edit'
         end

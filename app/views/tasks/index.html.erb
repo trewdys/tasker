@@ -12,7 +12,6 @@
 
     <% @tasks.each do |task| %>
         <tr>
-            <td><%= task.id %></td>
             <td><%= task.title %></td>
             <td><%= task.start_date %></td>
             <td><%= task.start_time.to_s[11,8] %></td>
