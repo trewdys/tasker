@@ -1,6 +1,9 @@
 class TasksController < ApplicationController
     def index
-        @tasks = Task.all
+        if defined?(cookies[:user_session]) === nil
+            cookies.permanent[:user_session] = session.id
+        end
+        @tasks = Task.where("user_session = ?", cookies[:user_session])
     end
     
     def show
@@ -14,7 +17,7 @@ class TasksController < ApplicationController
     end
 
     def create
-        @task = Task.new(task_params)
+        @task = Task.new(task_params.merge({:user_session => cookies[:user_session]}))
 
         @task.save
         redirect_to root_path
@@ -40,6 +43,6 @@ class TasksController < ApplicationController
     private
         def task_params
             params.require(:task).permit(:title, :start_date, :start_time,
-                                         :end_date, :end_time, :description)
+                                         :end_date, :end_time, :description, :user_session)
         end
 end

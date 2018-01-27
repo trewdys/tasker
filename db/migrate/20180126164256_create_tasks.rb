@@ -7,7 +7,7 @@ class CreateTasks < ActiveRecord::Migration[5.1]
       t.date :end_date
       t.time :end_time
       t.text :description
-      t.integer :user_session
+      t.string :user_session
 
       t.timestamps
     end

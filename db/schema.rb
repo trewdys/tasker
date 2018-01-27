@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20180126164256) do
     t.date "end_date"
     t.time "end_time"
     t.text "description"
-    t.integer "user_session"
+    t.string "user_session"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
