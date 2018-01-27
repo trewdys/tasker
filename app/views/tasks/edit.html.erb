@@ -1,6 +1,6 @@
 <h1>Edit task</h1>
 
-<%= form_with(model: @task) do |form| %>
+<%= form_with(model: [@user, @task]) do |form| %>
 
     <p>
         <%= form.text_field :title %>

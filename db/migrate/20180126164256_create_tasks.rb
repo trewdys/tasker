@@ -7,7 +7,7 @@ class CreateTasks < ActiveRecord::Migration[5.1]
       t.date :end_date
       t.time :end_time
       t.text :description
-      t.string :user_session
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

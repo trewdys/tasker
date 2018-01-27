@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   post '/' => 'tasks#create'
   delete '/' => 'tasks#destroy'
 
-  resources :tasks #:tags
+  resources :users do
+    resources :tasks
+  end
   
   root 'tasks#index'
 end

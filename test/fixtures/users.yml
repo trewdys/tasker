@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_session: MyString
+  last_login: 2018-01-27 18:31:35
+
+two:
+  user_session: MyString
+  last_login: 2018-01-27 18:31:35

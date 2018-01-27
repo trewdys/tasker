@@ -4,8 +4,11 @@ class TasksController < ApplicationController
             #Force session to generate
             session[:foo] = 'bar'
             cookies.permanent[:user_session] = session.id
+            User.create(user_session: session.id)
         end
-        @tasks = Task.where("user_session = ?", cookies[:user_session])
+        @user = User.find_by(user_session: cookies[:user_session])
+        @user.last_login = Time.now
+        @tasks = @user.tasks
         
     end
     
@@ -16,18 +19,20 @@ class TasksController < ApplicationController
     end
     
     def edit
-        @task = Task.find(params[:id])
+        @user = User.find_by(user_session: cookies[:user_session])
+        @task = @user.tasks.find(params[:id])
     end
 
     def create
-        @task = Task.new(task_params.merge({:user_session => cookies[:user_session]}))
+        @user = User.find_by(user_session: cookies[:user_session])
+        @task = @user.tasks.create(task_params)
 
-        @task.save
         redirect_to root_path
     end
 
     def update
-        @task = Task.find(params[:id])
+        @user = User.find_by(user_session: cookies[:user_session])
+        @task = @user.tasks.find(params[:id])
 
         if @task.update(task_params)
             redirect_to root_path
@@ -37,7 +42,8 @@ class TasksController < ApplicationController
     end
 
     def destroy
-        @task = Task.find(params[:id])
+        @user = User.find_by(user_session: cookies[:user_session])
+        @task = @user.tasks.find(params[:id])
         @task.destroy
 
         redirect_to root_path
