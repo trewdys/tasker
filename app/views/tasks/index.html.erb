@@ -1,5 +1,7 @@
 <h1>Tasker</h1>
 
+<%= link_to 'Manage/filter tags', user_tags_url(@user) %><br>
+
 <table>
     <tr>
         <td>Title</td>
@@ -8,9 +10,14 @@
         <td>End date</td>
         <td>End time</td>
         <td>Description</td>
+        <td>Tag</td>
     <tr>
 
     <% @tasks.each do |task| %>
+        <% task_tag = {color: '', name: ''} %>
+        <% if task.tag_id != nil
+              task_tag = Tag.find(task.tag_id)
+           end %>
         <tr>
             <td><%= task.title %></td>
             <td><%= task.start_date %></td>
@@ -18,6 +25,7 @@
             <td><%= task.end_date %></td>
             <td><%= task.end_time.to_s[11,8] %></td>
             <td><%= task.description.truncate(15) %></td>
+            <td style="color:<%= task_tag[:color] %>"><%= task_tag[:name]%></td>
             <td><%= link_to 'View/edit', edit_user_task_url(@user, task) %></td>
             <td><%= link_to 'Delete', [task.user, task], method: :delete %></td>
         </tr>
@@ -44,8 +52,11 @@
                 <%= form.text_area :description %>
             </td>
             <td>
+                <%= form.select(:tag_id, options_for_select(@tags_selection)) %>
+            <td>
                 <%= form.submit %>
             </td>
         <% end %>
     </tr>
+
 </table>

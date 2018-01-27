@@ -1,0 +1,52 @@
+<h1>Tasker</h1>
+<h2>Manage tags</h2>
+<h4>Please refresh once before creating or updating.<br>
+    If successful, this page will refresh.</h4>
+<% @tags.each do |tag| %>
+    <% if tag.errors.any?%>
+        <ul>
+        <% tag.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <%end%>
+        </ul>
+    <% end %>
+<% end %>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Color</td>
+    <tr>
+    <% @tags.each do |tag| %>
+        <tr>
+            <%= form_with(model: [tag.user, tag], local: true) do |form| %>
+                <td>
+                    <%= form.text_field :name %>
+                </td>
+                <td>
+                    <%= form.color_field :color %>
+                </td>
+                <td>
+                    <%= form.submit %>
+                </td>
+            <% end %>
+            <td><%= link_to 'View tagged tasks', user_tag_url(@user, tag) %>
+            <td><%= link_to 'Delete', [tag.user, tag], method: :delete %>
+        </tr>
+    <% end %>
+
+    <tr>
+        <%= form_with(model: @user.tags.build, url: user_tags_url, local: true) do |form| %>
+            <td>
+                <%= form.text_field :name %>
+            </td>
+            <td>
+                <%= form.color_field :color %>
+            </td>
+            <td>
+                <%= form.submit %>
+            </td>
+        <% end %>
+    </tr>
+</table>
+
+<%= link_to 'Back', root_path%>

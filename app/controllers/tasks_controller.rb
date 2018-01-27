@@ -9,13 +9,12 @@ class TasksController < ApplicationController
         @user = User.find_by(user_session: cookies[:user_session])
         @user.last_login = Time.now
         @tasks = @user.tasks
-        
-    end
-    
-    def show
-    end
+        @tags = @user.tags
+        @tags_selection = []
+        @user.tags.each do |tag|
+            @tags_selection.push([tag.name, tag.id])
+        end
 
-    def new
     end
     
     def edit
@@ -52,6 +51,7 @@ class TasksController < ApplicationController
     private
         def task_params
             params.require(:task).permit(:title, :start_date, :start_time,
-                                         :end_date, :end_time, :description, :user_session)
+                                         :end_date, :end_time, :description, 
+                                         :user_session, :tag_id)
         end
 end
